@@ -329,3 +329,5 @@ export const repoStructure = {
         },
       ],
     },
+  ],
+};
