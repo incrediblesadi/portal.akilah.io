@@ -329,3 +329,108 @@ export const repoStructure = {
         },
       ],
     },
+    {
+      name: 'Order Management',
+      description: 'Order processing and management',
+      path: '/orders',
+      children: [
+        {
+          name: 'OrderDashboard',
+          description: 'Order dashboard overview',
+          path: '/orders/dashboard',
+        },
+        {
+          name: 'OrderHistory',
+          description: 'View order history',
+          path: '/orders/history',
+        },
+        {
+          name: 'OrderDetails',
+          description: 'View order details',
+          path: '/orders/details',
+        },
+        {
+          name: 'OrderSettings',
+          description: 'Configure order settings',
+          path: '/orders/settings',
+        }
+      ],
+    },
+    {
+      name: 'Payment Management',
+      description: 'Payment processing and management',
+      path: '/payments',
+      children: [
+        {
+          name: 'PaymentDashboard',
+          description: 'Payment dashboard overview',
+          path: '/payments/dashboard',
+        },
+        {
+          name: 'PaymentMethods',
+          description: 'Configure payment methods',
+          path: '/payments/methods',
+        },
+        {
+          name: 'PaymentHistory',
+          description: 'View payment history',
+          path: '/payments/history',
+        },
+        {
+          name: 'PaymentSettings',
+          description: 'Configure payment settings',
+          path: '/payments/settings',
+        }
+      ],
+    },
+    {
+      name: 'Reports',
+      description: 'Business analytics and reporting',
+      path: '/reports',
+      children: [
+        {
+          name: 'SalesReports',
+          description: 'Sales analytics and reports',
+          path: '/reports/sales',
+        },
+        {
+          name: 'InventoryReports',
+          description: 'Inventory analytics and reports',
+          path: '/reports/inventory',
+        },
+        {
+          name: 'CustomerReports',
+          description: 'Customer analytics and reports',
+          path: '/reports/customers',
+        },
+        {
+          name: 'EmployeeReports',
+          description: 'Employee analytics and reports',
+          path: '/reports/employees',
+        }
+      ],
+    },
+    {
+      name: 'User Management',
+      description: 'User and role management',
+      path: '/users',
+      children: [
+        {
+          name: 'UserList',
+          description: 'View and manage users',
+          path: '/users/list',
+        },
+        {
+          name: 'RoleManagement',
+          description: 'Manage user roles and permissions',
+          path: '/users/roles',
+        },
+        {
+          name: 'UserInvitations',
+          description: 'Invite new users',
+          path: '/users/invitations',
+        }
+      ],
+    }
+  ]
+};
