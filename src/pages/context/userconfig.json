@@ -1,0 +1,15 @@
+{
+  "customerFolder": "defaultCustomer",
+  "userId": "",
+  "userConfig": {
+    "theme": "light",
+    "language": "en",
+    "timezone": "UTC",
+    "notifications": {
+      "email": true,
+      "sms": false,
+      "push": true
+    }
+  },
+  "lastUpdated": ""
+}

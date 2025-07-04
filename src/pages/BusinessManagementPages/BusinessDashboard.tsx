@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -13,7 +13,9 @@ import {
   List,
   ListItem,
   ListItemText,
-  ListItemIcon
+  ListItemIcon,
+  Alert,
+  CircularProgress
 } from '@mui/material';
 import BusinessIcon from '@mui/icons-material/Business';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -21,8 +23,10 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
+import { loadBusinessInfo } from './BusinessManagementServices/businessmanagementload';
+import { saveBusinessInfo } from './BusinessManagementServices/businessmanagementsave';
 
-interface BusinessInfo {
+interface BusinessDisplayInfo {
   name: string;
   address: string;
   city: string;
@@ -36,17 +40,51 @@ interface BusinessInfo {
 
 const BusinessDashboard: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [businessInfo, setBusinessInfo] = useState<BusinessInfo>({
-    name: 'Sample Restaurant',
-    address: '123 Main Street',
-    city: 'Anytown',
-    state: 'CA',
-    zipCode: '12345',
-    phone: '(555) 123-4567',
-    email: 'info@samplerestaurant.com',
-    website: 'www.samplerestaurant.com',
-    taxId: '12-3456789'
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const [businessInfo, setBusinessInfo] = useState<BusinessDisplayInfo>({
+    name: '',
+    address: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    phone: '',
+    email: '',
+    website: '',
+    taxId: ''
   });
+
+  useEffect(() => {
+    loadBusinessData();
+  }, []);
+
+  const loadBusinessData = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      
+      const data = await loadBusinessInfo();
+      
+      // Transform the loaded data to match our display format
+      setBusinessInfo({
+        name: data.business_name || data.restaurant_name || '',
+        address: data.address?.street || '',
+        city: data.address?.city || '',
+        state: data.address?.state || '',
+        zipCode: data.address?.zip || '',
+        phone: data.phone || '',
+        email: data.email || '',
+        website: data.website || '',
+        taxId: '' // This would come from additional business data
+      });
+    } catch (err: any) {
+      setError(err.message || 'Failed to load business information');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -56,16 +94,80 @@ const BusinessDashboard: React.FC = () => {
     });
   };
 
-  const handleSave = () => {
-    // In a real app, this would save to the backend
-    setIsEditing(false);
+  const handleSave = async () => {
+    setIsSaving(true);
+    setError(null);
+    setSuccess(null);
+    
+    try {
+      // Transform the data back to the business info format
+      const businessInfoToSave = {
+        business_name: businessInfo.name,
+        restaurant_name: businessInfo.name,
+        address: {
+          street: businessInfo.address,
+          city: businessInfo.city,
+          state: businessInfo.state,
+          zip: businessInfo.zipCode
+        },
+        phone: businessInfo.phone,
+        email: businessInfo.email,
+        website: businessInfo.website,
+        social_links: {},
+        hours: {
+          monday: { open: '09:00', close: '17:00', isTwentyFourHours: false },
+          tuesday: { open: '09:00', close: '17:00', isTwentyFourHours: false },
+          wednesday: { open: '09:00', close: '17:00', isTwentyFourHours: false },
+          thursday: { open: '09:00', close: '17:00', isTwentyFourHours: false },
+          friday: { open: '09:00', close: '17:00', isTwentyFourHours: false },
+          saturday: { open: '09:00', close: '17:00', isTwentyFourHours: false },
+          sunday: { open: '09:00', close: '17:00', isTwentyFourHours: false }
+        },
+        logo: '',
+        about: '',
+        features: {
+          online_ordering_enabled: true,
+          multi_language_enabled: false,
+          auto_display_rotation: false,
+          allow_specials: true
+        }
+      };
+      
+      await saveBusinessInfo(businessInfoToSave);
+      setSuccess('Business information saved successfully');
+      setIsEditing(false);
+    } catch (err: any) {
+      setError(err.message || 'Failed to save business information');
+    } finally {
+      setIsSaving(false);
+    }
   };
+
+  if (isLoading) {
+    return (
+      <Box sx={{ p: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h4" component="h1" gutterBottom>
         Business Management
       </Typography>
+      
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error}
+        </Alert>
+      )}
+      
+      {success && (
+        <Alert severity="success" sx={{ mb: 2 }}>
+          {success}
+        </Alert>
+      )}
       
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
@@ -78,8 +180,9 @@ const BusinessDashboard: React.FC = () => {
                 variant="outlined" 
                 startIcon={isEditing ? <SaveIcon /> : <EditIcon />}
                 onClick={() => isEditing ? handleSave() : setIsEditing(true)}
+                disabled={isSaving}
               >
-                {isEditing ? 'Save' : 'Edit'}
+                {isSaving ? <CircularProgress size={20} /> : (isEditing ? 'Save' : 'Edit')}
               </Button>
             </Box>
             
@@ -175,7 +278,10 @@ const BusinessDashboard: React.FC = () => {
                   <ListItemIcon>
                     <BusinessIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Business Name" secondary={businessInfo.name} />
+                  <ListItemText 
+                    primary="Business Name" 
+                    secondary={businessInfo.name || 'Not set'} 
+                  />
                 </ListItem>
                 <ListItem>
                   <ListItemIcon>
@@ -183,32 +289,47 @@ const BusinessDashboard: React.FC = () => {
                   </ListItemIcon>
                   <ListItemText 
                     primary="Address" 
-                    secondary={`${businessInfo.address}, ${businessInfo.city}, ${businessInfo.state} ${businessInfo.zipCode}`} 
+                    secondary={businessInfo.address && businessInfo.city ? 
+                      `${businessInfo.address}, ${businessInfo.city}, ${businessInfo.state} ${businessInfo.zipCode}` : 
+                      'Not set'
+                    } 
                   />
                 </ListItem>
                 <ListItem>
                   <ListItemIcon>
                     <PhoneIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Phone" secondary={businessInfo.phone} />
+                  <ListItemText 
+                    primary="Phone" 
+                    secondary={businessInfo.phone || 'Not set'} 
+                  />
                 </ListItem>
                 <ListItem>
                   <ListItemIcon>
                     <EmailIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Email" secondary={businessInfo.email} />
+                  <ListItemText 
+                    primary="Email" 
+                    secondary={businessInfo.email || 'Not set'} 
+                  />
                 </ListItem>
                 <ListItem>
                   <ListItemIcon>
                     <BusinessIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Website" secondary={businessInfo.website} />
+                  <ListItemText 
+                    primary="Website" 
+                    secondary={businessInfo.website || 'Not set'} 
+                  />
                 </ListItem>
                 <ListItem>
                   <ListItemIcon>
                     <BusinessIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Tax ID" secondary={businessInfo.taxId} />
+                  <ListItemText 
+                    primary="Tax ID" 
+                    secondary={businessInfo.taxId || 'Not set'} 
+                  />
                 </ListItem>
               </List>
             )}

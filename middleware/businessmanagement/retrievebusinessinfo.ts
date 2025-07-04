@@ -1,4 +1,4 @@
-import { Auth } from 'aws-amplify';
+import { getCurrentUser } from 'aws-amplify/auth';
 import fs from 'fs';
 import path from 'path';
 

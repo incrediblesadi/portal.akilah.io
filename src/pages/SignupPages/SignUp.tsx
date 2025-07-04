@@ -81,7 +81,7 @@ const SignUp: React.FC = () => {
     
     try {
       await confirmSignUp(username, confirmationCode);
-      navigate('/signin');
+      navigate('/business/setup');
     } catch (err: any) {
       setError(err.message || 'Failed to confirm sign up');
     } finally {

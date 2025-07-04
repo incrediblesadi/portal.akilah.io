@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Auth } from 'aws-amplify';
+import { signIn as amplifySignIn, signOut as amplifySignOut, signUp as amplifySignUp, confirmSignUp as amplifyConfirmSignUp, getCurrentUser } from 'aws-amplify/auth';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -28,7 +28,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const checkAuthState = async () => {
     try {
-      const currentUser = await Auth.currentAuthenticatedUser();
+      const currentUser = await getCurrentUser();
       setIsAuthenticated(true);
       setUser(currentUser);
     } catch (error) {
@@ -41,7 +41,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const signIn = async (username: string, password: string) => {
     try {
-      const user = await Auth.signIn(username, password);
+      const user = await amplifySignIn({ username, password });
       setIsAuthenticated(true);
       setUser(user);
       return user;
@@ -52,7 +52,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const signOut = async () => {
     try {
-      await Auth.signOut();
+      await amplifySignOut();
       setIsAuthenticated(false);
       setUser(null);
     } catch (error) {
@@ -63,11 +63,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const signUp = async (username: string, password: string, email: string) => {
     try {
-      const result = await Auth.signUp({
+      const result = await amplifySignUp({
         username,
         password,
-        attributes: {
-          email,
+        options: {
+          userAttributes: {
+            email,
+          },
         },
       });
       return result;
@@ -78,7 +80,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const confirmSignUp = async (username: string, code: string) => {
     try {
-      return await Auth.confirmSignUp(username, code);
+      return await amplifyConfirmSignUp({ username, confirmationCode: code });
     } catch (error) {
       throw error;
     }

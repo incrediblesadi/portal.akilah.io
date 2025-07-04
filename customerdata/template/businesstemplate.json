@@ -1,0 +1,38 @@
+{
+  "business_uid": "",
+  "business_name": "",
+  "restaurant_name": "",
+  "address": {
+    "street": "",
+    "city": "",
+    "state": "",
+    "zip": ""
+  },
+  "phone": "",
+  "email": "",
+  "website": "",
+  "social_links": {
+    "instagram": "",
+    "facebook": "",
+    "google": ""
+  },
+  "hours": {
+    "monday": { "open": "09:00", "close": "17:00", "isTwentyFourHours": false },
+    "tuesday": { "open": "09:00", "close": "17:00", "isTwentyFourHours": false },
+    "wednesday": { "open": "09:00", "close": "17:00", "isTwentyFourHours": false },
+    "thursday": { "open": "09:00", "close": "17:00", "isTwentyFourHours": false },
+    "friday": { "open": "09:00", "close": "17:00", "isTwentyFourHours": false },
+    "saturday": { "open": "09:00", "close": "17:00", "isTwentyFourHours": false },
+    "sunday": { "open": "09:00", "close": "17:00", "isTwentyFourHours": false }
+  },
+  "logo": "",
+  "about": "",
+  "features": {
+    "online_ordering_enabled": true,
+    "multi_language_enabled": false,
+    "auto_display_rotation": false,
+    "allow_specials": true
+  },
+  "created_at": "",
+  "updated_at": ""
+}

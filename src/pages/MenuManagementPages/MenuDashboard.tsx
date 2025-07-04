@@ -73,7 +73,7 @@ function TabPanel(props: TabPanelProps) {
 
 const MenuDashboard: React.FC = () => {
   const [tabValue, setTabValue] = useState(0);
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([
+  const [menuItems] = useState<MenuItem[]>([
     {
       id: '1',
       name: 'Classic Burger',
@@ -112,14 +112,14 @@ const MenuDashboard: React.FC = () => {
     }
   ]);
 
-  const [categories, setCategories] = useState<Category[]>([
+  const [categories] = useState<Category[]>([
     { id: '1', name: 'Main Dishes', itemCount: 1 },
     { id: '2', name: 'Salads', itemCount: 1 },
     { id: '3', name: 'Desserts', itemCount: 1 },
     { id: '4', name: 'Drinks', itemCount: 1 }
   ]);
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
 

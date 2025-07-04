@@ -81,11 +81,43 @@ const SetupBusiness: React.FC = () => {
     setError(null);
     
     try {
-      // In a real implementation, this would call a service to save the data
-      // await businessManagementService.saveBusiness(businessData);
+      // Import and use the business management service
+      const { saveBusinessInfo } = await import('./BusinessManagementServices/businessmanagementsave');
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Transform the business data to match the expected format
+      const businessInfoToSave = {
+        business_name: businessData.businessName,
+        restaurant_name: businessData.restaurantName,
+        address: {
+          street: businessData.address,
+          city: businessData.city,
+          state: businessData.state,
+          zip: businessData.zipCode
+        },
+        phone: businessData.phone,
+        email: businessData.email,
+        website: businessData.website,
+        social_links: {},
+        hours: {
+          monday: { open: '09:00', close: '17:00', isTwentyFourHours: false },
+          tuesday: { open: '09:00', close: '17:00', isTwentyFourHours: false },
+          wednesday: { open: '09:00', close: '17:00', isTwentyFourHours: false },
+          thursday: { open: '09:00', close: '17:00', isTwentyFourHours: false },
+          friday: { open: '09:00', close: '17:00', isTwentyFourHours: false },
+          saturday: { open: '09:00', close: '17:00', isTwentyFourHours: false },
+          sunday: { open: '09:00', close: '17:00', isTwentyFourHours: false }
+        },
+        logo: '',
+        about: businessData.about,
+        features: {
+          online_ordering_enabled: businessData.onlineOrderingEnabled,
+          multi_language_enabled: businessData.multiLanguageEnabled,
+          auto_display_rotation: businessData.autoDisplayRotation,
+          allow_specials: businessData.allowSpecials
+        }
+      };
+      
+      await saveBusinessInfo(businessInfoToSave);
       
       navigate('/business/dashboard');
     } catch (err: any) {

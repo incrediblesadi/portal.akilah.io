@@ -1,4 +1,4 @@
-import { Auth } from 'aws-amplify';
+import { getCurrentUser } from 'aws-amplify/auth';
 import { BusinessInfo } from './businessmanagementload';
 
 /**
@@ -9,8 +9,7 @@ import { BusinessInfo } from './businessmanagementload';
 export const saveBusinessInfo = async (businessInfo: Partial<BusinessInfo>): Promise<BusinessInfo> => {
   try {
     // Get the current authenticated user
-    const currentUser = await Auth.currentAuthenticatedUser();
-    const token = currentUser.signInUserSession.idToken.jwtToken;
+    await getCurrentUser();
     
     // In a real implementation, this would make an API call to the backend
     // For now, we'll simulate a successful save

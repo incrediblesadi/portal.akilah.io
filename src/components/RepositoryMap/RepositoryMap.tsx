@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Tree from 'react-d3-tree';
 import { Box, Typography, Paper, Tooltip, IconButton } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
@@ -29,63 +29,35 @@ const controlsStyles = {
   gap: '10px',
 };
 
-const nodeStyles = {
-  node: {
-    circle: {
-      fill: '#5469d4',
-    },
-    attributes: {
-      stroke: '#212121',
-    },
-  },
-  leafNode: {
-    circle: {
-      fill: '#4caf50',
-    },
-    attributes: {
-      stroke: '#212121',
-    },
-  },
-};
 
-const renderCustomNodeElement = ({ nodeDatum, toggleNode, onNodeClick }) => (
-  <g>
-    <circle r={15} fill={nodeDatum.children ? '#5469d4' : '#4caf50'} onClick={toggleNode} />
-    <Tooltip title={nodeDatum.description || 'No description available'}>
-      <g>
-        <text
-          fill="white"
-          strokeWidth="0.5"
-          x="0"
-          y="5"
-          textAnchor="middle"
-          style={{ fontSize: '12px', fontWeight: 'bold' }}
-          onClick={() => onNodeClick(nodeDatum)}
-        >
-          {nodeDatum.name.charAt(0).toUpperCase()}
-        </text>
-      </g>
-    </Tooltip>
-    <text
-      fill="#212121"
-      x="25"
-      y="5"
-      style={{ fontSize: '14px' }}
-      onClick={() => onNodeClick(nodeDatum)}
-    >
-      {nodeDatum.name}
-    </text>
-  </g>
-);
+
+
+const renderCustomNodeElement = (rd3tProps: any) => {
+  const { nodeDatum } = rd3tProps;
+  return (
+    <g>
+      <circle r={15} fill={nodeDatum.children ? '#5469d4' : '#4caf50'} />
+      <text
+        fill="black"
+        strokeWidth="0"
+        x={20}
+        y={5}
+        style={{ fontSize: '14px' }}
+      >
+        {nodeDatum.name}
+      </text>
+    </g>
+  );
+};
 
 const RepositoryMap = () => {
   const navigate = useNavigate();
   const [zoom, setZoom] = useState(0.6);
   const [translate, setTranslate] = useState({ x: 0, y: 0 });
 
-  const handleNodeClick = (nodeDatum) => {
-    if (nodeDatum.path) {
-      navigate(nodeDatum.path);
+  const handleNodeClick = (node: any) => {
+    if (node.data && node.data.path) {
+      navigate(node.data.path);
     }
   };
 
@@ -135,12 +107,7 @@ const RepositoryMap = () => {
           translate={{ x: 200 + translate.x, y: 300 + translate.y }}
           zoom={zoom}
           onNodeClick={handleNodeClick}
-          renderCustomNodeElement={(rd3tProps) =>
-            renderCustomNodeElement({
-              ...rd3tProps,
-              onNodeClick: handleNodeClick,
-            })
-          }
+          renderCustomNodeElement={renderCustomNodeElement}
           separation={{ siblings: 1.5, nonSiblings: 2 }}
           nodeSize={{ x: 200, y: 100 }}
           pathClassFunc={() => 'custom-link'}
