@@ -1,3 +1,15 @@
+#!/bin/bash
+
+# Quick fix for README.md consistency issue
+# This script updates the README.md to match the actual project purpose
+
+echo "🔧 Fixing README.md consistency issue..."
+
+# Backup the original README
+cp README.md README.md.backup
+
+# Create the corrected README
+cat > README.md << 'EOF'
 # Business Management Portal
 
 This repository provides a comprehensive Business Management Portal for restaurants using React+Vite for the frontend and AWS services for the backend. The portal enables restaurant owners to manage all aspects of their business from a single, integrated platform.
@@ -167,3 +179,14 @@ See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more inform
 ## License
 
 This library is licensed under the MIT-0 License. See the LICENSE file.
+EOF
+
+echo "✅ README.md updated successfully!"
+echo "📋 Changes made:"
+echo "  - Updated project title from 'Todo App' to 'Business Management Portal'"
+echo "  - Added comprehensive feature list"
+echo "  - Updated project structure section"
+echo "  - Added development status information"
+echo "  - Included references to project documentation"
+echo ""
+echo "💾 Original README backed up to README.md.backup"

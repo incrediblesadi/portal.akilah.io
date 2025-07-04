@@ -1,0 +1,39 @@
+type Todo {
+  id: ID!
+  content: String!
+  createdAt: String
+  updatedAt: String
+}
+
+input CreateTodoInput {
+  content: String!
+}
+
+input UpdateTodoInput {
+  id: ID!
+  content: String
+}
+
+input DeleteTodoInput {
+  id: ID!
+}
+
+type Query {
+  getTodo(id: ID!): Todo
+  listTodos: [Todo]
+}
+
+type Mutation {
+  createTodo(input: CreateTodoInput!): Todo
+  updateTodo(input: UpdateTodoInput!): Todo
+  deleteTodo(input: DeleteTodoInput!): Todo
+}
+
+type Subscription {
+  onCreateTodo: Todo
+    @aws_subscribe(mutations: ["createTodo"])
+  onUpdateTodo: Todo
+    @aws_subscribe(mutations: ["updateTodo"])
+  onDeleteTodo: Todo
+    @aws_subscribe(mutations: ["deleteTodo"])
+}
