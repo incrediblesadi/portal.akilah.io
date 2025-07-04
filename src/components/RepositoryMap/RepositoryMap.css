@@ -1,0 +1,33 @@
+.custom-link {
+  stroke: #555;
+  stroke-width: 1.5;
+}
+
+.rd3t-label__title {
+  fill: #212121;
+  font-weight: bold;
+}
+
+.rd3t-label__attributes {
+  fill: #666;
+}
+
+.rd3t-node circle {
+  cursor: pointer;
+}
+
+.rd3t-node text {
+  cursor: pointer;
+}
+
+.node__root > circle {
+  fill: #ff6b6b;
+}
+
+.node__branch > circle {
+  fill: #5469d4;
+}
+
+.node__leaf > circle {
+  fill: #4caf50;
+}
