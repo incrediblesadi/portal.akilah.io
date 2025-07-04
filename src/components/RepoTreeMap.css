@@ -1,0 +1,290 @@
+/* Repository Tree Map Styles */
+.repo-tree-map {
+  padding: 20px;
+  background: #f5f5f5;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.repo-tree-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.repo-tree-header h1 {
+  color: #2c3e50;
+  margin: 0 0 10px 0;
+  font-size: 28px;
+}
+
+.repo-tree-header p {
+  color: #7f8c8d;
+  margin: 0;
+  font-size: 16px;
+}
+
+.repo-tree-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.repo-tree-view {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.tree-section {
+  padding: 20px;
+}
+
+.tree-section:first-child {
+  border-bottom: 1px solid #e9ecef;
+}
+
+.tree-section h2 {
+  color: #2c3e50;
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tree-section h2::before {
+  content: '🗂️';
+  font-size: 18px;
+}
+
+.tree-node {
+  margin-bottom: 2px;
+}
+
+.tree-node-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.tree-node-content:hover {
+  background: #f8f9fa;
+  border-color: #dee2e6;
+}
+
+.tree-node-content.selected {
+  background: #e3f2fd;
+  border-color: #2196f3;
+}
+
+.tree-node-content.current {
+  border-left: 3px solid #4caf50;
+}
+
+.tree-node-content.planned {
+  border-left: 3px solid #ff9800;
+}
+
+.tree-node-content.missing {
+  border-left: 3px solid #f44336;
+}
+
+.tree-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  color: #6c757d;
+  padding: 2px 4px;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+}
+
+.tree-toggle:hover {
+  background: #e9ecef;
+  color: #495057;
+}
+
+.tree-icon {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.tree-name {
+  flex: 1;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.tree-status {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tree-status.current {
+  background: #d4edda;
+  color: #155724;
+}
+
+.tree-status.planned {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.tree-status.missing {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.tree-children {
+  margin-left: 0;
+}
+
+.repo-tree-details {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 20px;
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.repo-tree-details h3 {
+  color: #2c3e50;
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.repo-tree-details h3::before {
+  content: '📋';
+  font-size: 16px;
+}
+
+.node-details h4 {
+  color: #2c3e50;
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 8px;
+}
+
+.node-details p {
+  margin: 8px 0;
+  color: #495057;
+  line-height: 1.5;
+}
+
+.node-details strong {
+  color: #2c3e50;
+}
+
+.node-details ul {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.node-details li {
+  margin: 4px 0;
+  color: #495057;
+}
+
+.repo-tree-legend {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 20px;
+}
+
+.repo-tree-legend h3 {
+  color: #2c3e50;
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.repo-tree-legend h3::before {
+  content: '🏷️';
+  font-size: 16px;
+}
+
+.legend-items {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #495057;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.legend-color.current {
+  background: #4caf50;
+}
+
+.legend-color.planned {
+  background: #ff9800;
+}
+
+.legend-color.missing {
+  background: #f44336;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .repo-tree-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .repo-tree-details {
+    position: static;
+  }
+  
+  .legend-items {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .tree-node-content {
+    padding: 12px;
+  }
+  
+  .tree-name {
+    font-size: 14px;
+  }
+}

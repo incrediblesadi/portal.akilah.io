@@ -1,39 +1,35 @@
-import { useEffect, useState } from "react";
-import type { Schema } from "../amplify/data/resource";
-import { generateClient } from "aws-amplify/data";
-
-const client = generateClient<Schema>();
+import { useState } from 'react';
+import Layout from './components/Layout';
+import RepoTreeMap from './components/RepoTreeMap';
+import AdvancedProjectPlan from './components/AdvancedProjectPlan';
+import DataFlowVisualization from './components/DataFlowVisualization';
+import ArchitectureOverview from './components/ArchitectureOverview';
+import './App.css';
 
 function App() {
-  const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
+  const [currentPage, setCurrentPage] = useState('repo-map');
 
-  useEffect(() => {
-    client.models.Todo.observeQuery().subscribe({
-      next: (data) => setTodos([...data.items]),
-    });
-  }, []);
-
-  function createTodo() {
-    client.models.Todo.create({ content: window.prompt("Todo content") });
-  }
+  const renderCurrentPage = () => {
+    switch (currentPage) {
+      case 'repo-map':
+        return <RepoTreeMap />;
+      case 'project-plan':
+        return <AdvancedProjectPlan />;
+      case 'data-flow':
+        return <DataFlowVisualization />;
+      case 'architecture':
+        return <ArchitectureOverview />;
+      default:
+        return <RepoTreeMap />;
+    }
+  };
 
   return (
-    <main>
-      <h1>My todos</h1>
-      <button onClick={createTodo}>+ new</button>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>{todo.content}</li>
-        ))}
-      </ul>
-      <div>
-        🥳 App successfully hosted. Try creating a new todo.
-        <br />
-        <a href="https://docs.amplify.aws/react/start/quickstart/#make-frontend-updates">
-          Review next step of this tutorial.
-        </a>
-      </div>
-    </main>
+    <div className="app">
+      <Layout currentPage={currentPage} onPageChange={setCurrentPage}>
+        {renderCurrentPage()}
+      </Layout>
+    </div>
   );
 }
 
