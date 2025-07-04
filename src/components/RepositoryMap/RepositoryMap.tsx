@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Tree from 'react-d3-tree';
 import { Box, Typography, Paper, Tooltip, IconButton } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
@@ -29,26 +29,8 @@ const controlsStyles = {
   gap: '10px',
 };
 
-const nodeStyles = {
-  node: {
-    circle: {
-      fill: '#5469d4',
-    },
-    attributes: {
-      stroke: '#212121',
-    },
-  },
-  leafNode: {
-    circle: {
-      fill: '#4caf50',
-    },
-    attributes: {
-      stroke: '#212121',
-    },
-  },
-};
 
-const renderCustomNodeElement = ({ nodeDatum, toggleNode, onNodeClick }) => (
+const renderCustomNodeElement = ({ nodeDatum, toggleNode, onNodeClick }: { nodeDatum: any, toggleNode: any, onNodeClick: any }) => (
   <g>
     <circle r={15} fill={nodeDatum.children ? '#5469d4' : '#4caf50'} onClick={toggleNode} />
     <Tooltip title={nodeDatum.description || 'No description available'}>
@@ -83,7 +65,7 @@ const RepositoryMap = () => {
   const [zoom, setZoom] = useState(0.6);
   const [translate, setTranslate] = useState({ x: 0, y: 0 });
 
-  const handleNodeClick = (nodeDatum) => {
+  const handleNodeClick = (nodeDatum: any) => {
     if (nodeDatum.path) {
       navigate(nodeDatum.path);
     }
