@@ -1,0 +1,148 @@
+name: Documentation Validation
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run weekly on Sundays at 00:00 UTC
+    - cron: '0 0 * * 0'
+
+jobs:
+  validate-documentation:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Lint Markdown files
+      uses: DavidAnson/markdownlint-cli2-action@v15
+      with:
+        globs: '**/*.md'
+        config: '.markdownlint.json'
+        
+    - name: Check documentation links
+      uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        use-quiet-mode: 'yes'
+        use-verbose-mode: 'yes'
+        
+    - name: Validate documentation against implementation
+      run: |
+        chmod +x scripts/validate-docs.sh
+        ./scripts/validate-docs.sh
+        
+    - name: Generate implementation status report
+      run: |
+        chmod +x scripts/update-status.sh
+        ./scripts/update-status.sh
+        
+    - name: Upload status report
+      uses: actions/upload-artifact@v4
+      with:
+        name: implementation-status-report
+        path: implementation_status_report.md
+        
+    - name: Comment on PR (if applicable)
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          if (fs.existsSync('implementation_status_report.md')) {
+            const report = fs.readFileSync('implementation_status_report.md', 'utf8');
+            const body = `## 📊 Implementation Status Report\n\n${report}`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+          }
+          
+  check-documentation-freshness:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Check for outdated documentation
+      run: |
+        echo "Checking for documentation files older than 30 days..."
+        OUTDATED_FILES=$(find . -name "*.md" -mtime +30 | grep -v ".git" | head -10)
+        
+        if [ -n "$OUTDATED_FILES" ]; then
+          echo "⚠️ Found outdated documentation files:"
+          echo "$OUTDATED_FILES"
+          echo "::warning::Some documentation files are older than 30 days"
+        else
+          echo "✅ All documentation files are recent"
+        fi
+        
+    - name: Check README consistency
+      run: |
+        if grep -q "Todo" README.md; then
+          echo "::error::README.md still references Todo app instead of Business Portal"
+          exit 1
+        else
+          echo "✅ README.md is consistent with project type"
+        fi
+        
+  audit-documentation-quality:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Install textlint
+      run: |
+        npm install -g textlint
+        npm install -g textlint-rule-max-ten
+        npm install -g textlint-rule-spellcheck-tech-word
+        
+    - name: Run textlint on documentation
+      run: |
+        textlint --rule max-ten --rule spellcheck-tech-word *.md || true
+        
+    - name: Calculate documentation metrics
+      run: |
+        echo "📊 Documentation Metrics:"
+        echo "========================"
+        
+        # Count total lines of documentation
+        TOTAL_LINES=$(wc -l *.md | tail -1 | awk '{print $1}')
+        echo "Total documentation lines: $TOTAL_LINES"
+        
+        # Count number of documentation files
+        DOC_FILES=$(ls -1 *.md | wc -l)
+        echo "Total documentation files: $DOC_FILES"
+        
+        # Average lines per file
+        if [ $DOC_FILES -gt 0 ]; then
+          AVG_LINES=$((TOTAL_LINES / DOC_FILES))
+          echo "Average lines per file: $AVG_LINES"
+        fi
+        
+        # Find largest documentation file
+        LARGEST_FILE=$(wc -l *.md | sort -nr | head -1)
+        echo "Largest documentation file: $LARGEST_FILE"
+        
+        # Check for files that might be too large
+        if wc -l *.md | awk '$1 > 500 {print $2}' | grep -q .; then
+          echo "⚠️ Large documentation files detected:"
+          wc -l *.md | awk '$1 > 500 {print "  " $2 " (" $1 " lines)"}'
+        fi
