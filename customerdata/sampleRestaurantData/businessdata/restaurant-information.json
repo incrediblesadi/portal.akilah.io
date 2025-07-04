@@ -1,0 +1,77 @@
+{
+  "id": "business-456",
+  "name": "Sample Restaurant",
+  "description": "A wonderful restaurant serving delicious food with exceptional service.",
+  "type": "restaurant",
+  "address": {
+    "street": "123 Main Street",
+    "city": "New York",
+    "state": "NY",
+    "zipCode": "10001",
+    "country": "USA"
+  },
+  "contact": {
+    "phone": "(555) 123-4567",
+    "email": "info@samplerestaurant.com",
+    "website": "https://samplerestaurant.com"
+  },
+  "businessDetails": {
+    "taxId": "12-3456789",
+    "license": "RES-2024-001",
+    "capacity": 100,
+    "foundedYear": 2020
+  },
+  "branding": {
+    "logo": "/assets/logos/sample-restaurant-logo.png",
+    "primaryColor": "#2E7D32",
+    "secondaryColor": "#FFC107",
+    "fontFamily": "Roboto"
+  },
+  "operatingHours": {
+    "monday": { "open": "11:00", "close": "22:00", "closed": false },
+    "tuesday": { "open": "11:00", "close": "22:00", "closed": false },
+    "wednesday": { "open": "11:00", "close": "22:00", "closed": false },
+    "thursday": { "open": "11:00", "close": "22:00", "closed": false },
+    "friday": { "open": "11:00", "close": "23:00", "closed": false },
+    "saturday": { "open": "10:00", "close": "23:00", "closed": false },
+    "sunday": { "open": "10:00", "close": "21:00", "closed": false }
+  },
+  "socialMedia": {
+    "facebook": "https://facebook.com/samplerestaurant",
+    "instagram": "https://instagram.com/samplerestaurant",
+    "twitter": "https://twitter.com/samplerestaurant"
+  },
+  "status": "active",
+  "concepts": [
+    {
+      "id": "main-dining",
+      "name": "Main Dining",
+      "description": "Full service dining experience",
+      "active": true
+    },
+    {
+      "id": "quick-service",
+      "name": "Quick Service",
+      "description": "Fast casual dining options",
+      "active": true
+    }
+  ],
+  "locations": [
+    {
+      "id": "location-1",
+      "name": "Main Location",
+      "address": {
+        "street": "123 Main Street",
+        "city": "New York",
+        "state": "NY",
+        "zipCode": "10001"
+      },
+      "active": true
+    }
+  ],
+  "metadata": {
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-01-01T12:00:00Z",
+    "version": "1.0.0"
+  }
+}

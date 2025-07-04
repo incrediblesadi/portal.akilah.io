@@ -1,0 +1,140 @@
+{
+  "tools": {
+    "businessManagement": {
+      "enabled": true,
+      "version": "1.0.0",
+      "features": {
+        "setup": true,
+        "edit": true,
+        "view": true,
+        "hours": true,
+        "locations": true
+      }
+    },
+    "menuManagement": {
+      "enabled": true,
+      "version": "1.0.0",
+      "features": {
+        "concepts": true,
+        "categories": true,
+        "items": true,
+        "modifiers": true,
+        "pricing": true
+      }
+    },
+    "orderManagement": {
+      "enabled": true,
+      "version": "1.0.0",
+      "features": {
+        "viewOrders": true,
+        "updateStatus": true,
+        "orderDetails": true,
+        "auditLog": true
+      }
+    },
+    "paymentManagement": {
+      "enabled": true,
+      "version": "1.0.0",
+      "features": {
+        "viewTransactions": true,
+        "connectTerminal": true,
+        "paymentSettings": true,
+        "settlementHistory": true
+      }
+    },
+    "displayManagement": {
+      "enabled": true,
+      "version": "1.0.0",
+      "features": {
+        "createDisplay": true,
+        "configureContent": true,
+        "styling": true,
+        "preview": true,
+        "liveView": true
+      }
+    },
+    "kioskManagement": {
+      "enabled": true,
+      "version": "1.0.0",
+      "features": {
+        "registerKiosk": true,
+        "configureContent": true,
+        "styling": true,
+        "preview": true,
+        "sessionManager": true
+      }
+    },
+    "kdcManagement": {
+      "enabled": true,
+      "version": "1.0.0",
+      "features": {
+        "registerKDC": true,
+        "contentRouting": true,
+        "styling": true,
+        "permissions": true,
+        "liveView": true
+      }
+    },
+    "reportsManagement": {
+      "enabled": true,
+      "version": "1.0.0",
+      "features": {
+        "salesReports": true,
+        "itemPerformance": true,
+        "modifierUsage": true,
+        "kitchenTiming": true,
+        "exportReports": true
+      }
+    },
+    "userManagement": {
+      "enabled": true,
+      "version": "1.0.0",
+      "features": {
+        "userSetup": true,
+        "userProfile": true,
+        "userSettings": true,
+        "userAssets": true
+      }
+    }
+  },
+  "integrations": {
+    "stripe": {
+      "enabled": false,
+      "version": "1.0.0",
+      "testMode": true
+    },
+    "square": {
+      "enabled": false,
+      "version": "1.0.0",
+      "testMode": true
+    },
+    "amplify": {
+      "enabled": true,
+      "version": "6.6.6",
+      "features": {
+        "auth": true,
+        "data": true,
+        "storage": true
+      }
+    }
+  },
+  "ui": {
+    "theme": "light",
+    "primaryColor": "#1976d2",
+    "secondaryColor": "#dc004e",
+    "layout": "dashboard",
+    "navigation": "sidebar",
+    "density": "comfortable"
+  },
+  "performance": {
+    "cacheEnabled": true,
+    "cacheTimeout": 300,
+    "optimisticUpdates": true,
+    "realTimeUpdates": true
+  },
+  "debug": {
+    "enabled": false,
+    "logLevel": "info",
+    "apiLogging": false
+  }
+}

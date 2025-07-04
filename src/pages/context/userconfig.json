@@ -1,0 +1,40 @@
+{
+  "userId": "user-123",
+  "businessId": "business-456",
+  "customerDataFolder": "sampleRestaurantData",
+  "settings": {
+    "timezone": "America/New_York",
+    "currency": "USD",
+    "language": "en",
+    "dateFormat": "MM/DD/YYYY",
+    "timeFormat": "12h"
+  },
+  "permissions": {
+    "canEditBusiness": true,
+    "canManageMenu": true,
+    "canViewOrders": true,
+    "canManagePayments": true,
+    "canViewReports": true,
+    "canManageUsers": false
+  },
+  "preferences": {
+    "theme": "light",
+    "notifications": {
+      "email": true,
+      "push": true,
+      "sms": false
+    },
+    "dashboard": {
+      "widgets": ["orders", "revenue", "menu-items", "customer-feedback"]
+    }
+  },
+  "businessInfo": {
+    "name": "Sample Restaurant",
+    "type": "restaurant",
+    "concepts": ["main-dining", "quick-service"],
+    "locations": ["location-1"]
+  },
+  "lastLogin": "2024-01-01T12:00:00Z",
+  "createdAt": "2024-01-01T00:00:00Z",
+  "updatedAt": "2024-01-01T12:00:00Z"
+}
