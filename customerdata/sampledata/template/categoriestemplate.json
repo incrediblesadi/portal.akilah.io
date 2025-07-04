@@ -1,0 +1,77 @@
+[
+  {
+    "uid": "cat_burgers",
+    "name": "Burgers",
+    "description": "Fresh grilled patties with premium toppings",
+    "image": "assets/cat-burgers.jpg",
+    "sort_order": 1,
+    
+    "status": "active",
+    
+    "visibility": {
+      "digital_menu": true,
+      "kiosk": true,
+      "online": true
+    },
+    
+    "schedule": {
+      "days": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"],
+      "time_windows": [
+        { "start": "10:00", "end": "22:00" }
+      ]
+    },
+    
+    "created_at": "2025-01-01T00:00:00Z",
+    "updated_at": "2025-01-01T00:00:00Z"
+  },
+  {
+    "uid": "cat_sides",
+    "name": "Sides",
+    "description": "Delicious side dishes and appetizers",
+    "image": "assets/cat-sides.jpg",
+    "sort_order": 2,
+    
+    "status": "active",
+    
+    "visibility": {
+      "digital_menu": true,
+      "kiosk": true,
+      "online": true
+    },
+    
+    "schedule": {
+      "days": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"],
+      "time_windows": [
+        { "start": "10:00", "end": "22:00" }
+      ]
+    },
+    
+    "created_at": "2025-01-01T00:00:00Z",
+    "updated_at": "2025-01-01T00:00:00Z"
+  },
+  {
+    "uid": "cat_beverages",
+    "name": "Beverages",
+    "description": "Refreshing drinks and specialty beverages",
+    "image": "assets/cat-beverages.jpg",
+    "sort_order": 3,
+    
+    "status": "active",
+    
+    "visibility": {
+      "digital_menu": true,
+      "kiosk": true,
+      "online": true
+    },
+    
+    "schedule": {
+      "days": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"],
+      "time_windows": [
+        { "start": "10:00", "end": "22:00" }
+      ]
+    },
+    
+    "created_at": "2025-01-01T00:00:00Z",
+    "updated_at": "2025-01-01T00:00:00Z"
+  }
+]

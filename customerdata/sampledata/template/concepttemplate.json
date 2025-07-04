@@ -1,0 +1,38 @@
+{
+  "concept_uid": "sample_concept",
+  "concept_name": "Sample Grill",
+  "description": "Fresh grilled foods and beverages",
+  "email": "grill@samplerestaurant.com",
+  "phone": "+1-555-123-4567",
+  
+  "status": {
+    "active": true,
+    "open_now": true,
+    "last_updated_by": "admin_user_01",
+    "last_updated_at": "2025-01-01T00:00:00Z"
+  },
+  
+  "hours": {
+    "monday": { "open": "10:00", "close": "22:00", "isTwentyFourHours": false },
+    "tuesday": { "open": "10:00", "close": "22:00", "isTwentyFourHours": false },
+    "wednesday": { "open": "10:00", "close": "22:00", "isTwentyFourHours": false },
+    "thursday": { "open": "10:00", "close": "22:00", "isTwentyFourHours": false },
+    "friday": { "open": "10:00", "close": "23:00", "isTwentyFourHours": false },
+    "saturday": { "open": "10:00", "close": "23:00", "isTwentyFourHours": false },
+    "sunday": { "open": "11:00", "close": "21:00", "isTwentyFourHours": false }
+  },
+  
+  "logo": "assets/concept-logo.png",
+  "about": "Our classic flame-grilled menu featuring fresh ingredients and bold flavors.",
+  "tags": ["grilled", "fresh", "fast-casual"],
+  
+  "styling": {
+    "theme": "modern",
+    "primaryColor": "#FF6B35",
+    "secondaryColor": "#2E3A59",
+    "fontFamily": "Arial, sans-serif"
+  },
+  
+  "created_at": "2025-01-01T00:00:00Z",
+  "updated_at": "2025-01-01T00:00:00Z"
+}

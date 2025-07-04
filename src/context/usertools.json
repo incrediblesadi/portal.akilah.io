@@ -1,0 +1,56 @@
+{
+  "tools": {
+    "business_management": {
+      "enabled": true,
+      "features": ["setup", "view", "edit", "delete"],
+      "apiEndpoint": "/api/business"
+    },
+    "menu_management": {
+      "enabled": true,
+      "features": ["concepts", "categories", "items", "modifiers"],
+      "apiEndpoint": "/api/menu"
+    },
+    "display_management": {
+      "enabled": true,
+      "features": ["create", "configure", "preview", "live"],
+      "apiEndpoint": "/api/display"
+    },
+    "kiosk_management": {
+      "enabled": true,
+      "features": ["register", "configure", "preview", "live"],
+      "apiEndpoint": "/api/kiosk"
+    },
+    "kdc_management": {
+      "enabled": true,
+      "features": ["register", "configure", "preview", "live"],
+      "apiEndpoint": "/api/kdc"
+    },
+    "order_management": {
+      "enabled": true,
+      "features": ["view", "track", "update", "history"],
+      "apiEndpoint": "/api/orders"
+    },
+    "payment_management": {
+      "enabled": true,
+      "features": ["providers", "transactions", "settlements"],
+      "apiEndpoint": "/api/payments"
+    },
+    "reports_management": {
+      "enabled": true,
+      "features": ["sales", "performance", "kitchen", "modifiers"],
+      "apiEndpoint": "/api/reports"
+    }
+  },
+  "integrations": {
+    "stripe": {
+      "enabled": false,
+      "apiKey": "",
+      "webhookSecret": ""
+    },
+    "square": {
+      "enabled": false,
+      "apiKey": "",
+      "webhookSecret": ""
+    }
+  }
+}

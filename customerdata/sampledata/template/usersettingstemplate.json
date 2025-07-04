@@ -1,0 +1,40 @@
+{
+  "userId": "user_001",
+  "profile": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "phone": "+1-555-123-4567",
+    "role": "business_owner",
+    "avatar": "assets/default-avatar.png"
+  },
+  "preferences": {
+    "theme": "light",
+    "language": "en",
+    "timezone": "America/New_York",
+    "dateFormat": "MM/DD/YYYY",
+    "timeFormat": "12h",
+    "currency": "USD",
+    "notifications": {
+      "email": true,
+      "push": true,
+      "sms": false
+    }
+  },
+  "dashboard": {
+    "defaultView": "business_overview",
+    "widgets": [
+      "recent_orders",
+      "sales_summary",
+      "popular_items",
+      "kiosk_status"
+    ]
+  },
+  "security": {
+    "twoFactorEnabled": false,
+    "lastPasswordChange": "2025-01-01T00:00:00Z",
+    "sessionTimeout": 3600
+  },
+  "created_at": "2025-01-01T00:00:00Z",
+  "updated_at": "2025-01-01T00:00:00Z"
+}

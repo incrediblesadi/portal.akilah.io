@@ -1,0 +1,57 @@
+{
+  "paymentMethods": {
+    "stripe": {
+      "enabled": false,
+      "publicKey": "",
+      "secretKey": "",
+      "webhookSecret": "",
+      "supportedMethods": ["card", "apple_pay", "google_pay"],
+      "currencies": ["USD"]
+    },
+    "square": {
+      "enabled": false,
+      "applicationId": "",
+      "accessToken": "",
+      "webhookSecret": "",
+      "locationId": "",
+      "supportedMethods": ["card", "apple_pay", "google_pay"],
+      "currencies": ["USD"]
+    },
+    "cash": {
+      "enabled": true,
+      "requiresApproval": false
+    }
+  },
+  "terminals": {
+    "pos_terminal_1": {
+      "id": "term_001",
+      "name": "Main Counter Terminal",
+      "type": "stripe_terminal",
+      "location": "main_counter",
+      "status": "active",
+      "lastSeen": "2025-01-01T00:00:00Z"
+    }
+  },
+  "processing": {
+    "fees": {
+      "stripe": {
+        "cardRate": 0.029,
+        "fixedFee": 0.30
+      },
+      "square": {
+        "cardRate": 0.026,
+        "fixedFee": 0.10
+      }
+    },
+    "settlementSchedule": "daily",
+    "autoCapture": true,
+    "refundPolicy": "full_refund_24h"
+  },
+  "compliance": {
+    "pciCompliant": true,
+    "dataRetentionDays": 365,
+    "encryptionEnabled": true
+  },
+  "created_at": "2025-01-01T00:00:00Z",
+  "updated_at": "2025-01-01T00:00:00Z"
+}

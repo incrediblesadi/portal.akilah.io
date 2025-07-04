@@ -1,0 +1,60 @@
+{
+  "businessId": "business_001",
+  "businessName": "Sample Restaurant",
+  "businessType": "restaurant",
+  "description": "A sample restaurant for demonstration purposes",
+  "email": "contact@samplerestaurant.com",
+  "phone": "+1-555-123-4567",
+  "website": "https://samplerestaurant.com",
+  
+  "address": {
+    "street": "123 Main Street",
+    "city": "Sample City",
+    "state": "SC",
+    "zipCode": "12345",
+    "country": "USA"
+  },
+  
+  "businessHours": {
+    "monday": { "open": "10:00", "close": "22:00", "isTwentyFourHours": false },
+    "tuesday": { "open": "10:00", "close": "22:00", "isTwentyFourHours": false },
+    "wednesday": { "open": "10:00", "close": "22:00", "isTwentyFourHours": false },
+    "thursday": { "open": "10:00", "close": "22:00", "isTwentyFourHours": false },
+    "friday": { "open": "10:00", "close": "23:00", "isTwentyFourHours": false },
+    "saturday": { "open": "10:00", "close": "23:00", "isTwentyFourHours": false },
+    "sunday": { "open": "11:00", "close": "21:00", "isTwentyFourHours": false }
+  },
+  
+  "socialMedia": {
+    "facebook": "https://facebook.com/samplerestaurant",
+    "instagram": "https://instagram.com/samplerestaurant",
+    "twitter": "https://twitter.com/samplerestaurant"
+  },
+  
+  "branding": {
+    "logo": "assets/business-logo.png",
+    "primaryColor": "#FF6B35",
+    "secondaryColor": "#2E3A59",
+    "fontFamily": "Arial, sans-serif"
+  },
+  
+  "settings": {
+    "currency": "USD",
+    "taxRate": 0.0875,
+    "serviceCharge": 0.00,
+    "tipSuggestions": [0.15, 0.18, 0.20],
+    "acceptsCash": true,
+    "acceptsCards": true,
+    "acceptsDigitalPayments": true
+  },
+  
+  "features": {
+    "online_ordering_enabled": true,
+    "multi_language_enabled": false,
+    "auto_display_rotation": false,
+    "allow_specials": true
+  },
+  
+  "created_at": "2025-01-01T00:00:00Z",
+  "updated_at": "2025-01-01T00:00:00Z"
+}

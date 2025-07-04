@@ -27,3 +27,12 @@ dist-ssr
 .amplify
 amplify_outputs*
 amplifyconfiguration*
+
+# Uploaded files (keep directory structure but ignore content)
+uploads/*
+!uploads/README.md
+
+# Customer data (keep templates but ignore actual customer data)
+customerdata/*/businessdata/*
+!customerdata/*/businessdata/.gitkeep
+!customerdata/*/template/

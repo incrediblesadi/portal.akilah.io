@@ -1,0 +1,26 @@
+{
+  "userId": "user_001",
+  "businessId": "business_001",
+  "customerDataFolder": "sampledata",
+  "currentBusiness": {
+    "businessId": "business_001",
+    "businessName": "Sample Restaurant",
+    "businessType": "restaurant"
+  },
+  "preferences": {
+    "theme": "default",
+    "language": "en",
+    "timezone": "UTC"
+  },
+  "permissions": {
+    "canManageBusiness": true,
+    "canManageMenu": true,
+    "canManageOrders": true,
+    "canManageDisplays": true,
+    "canManageKiosks": true,
+    "canManageKDC": true,
+    "canManagePayments": true,
+    "canViewReports": true
+  },
+  "lastUpdated": "2025-01-01T00:00:00Z"
+}
