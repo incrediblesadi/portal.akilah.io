@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Tree from 'react-d3-tree';
 import { Box, Typography, Paper, Tooltip, IconButton } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
@@ -15,40 +15,34 @@ const containerStyles = {
   border: '1px solid #ddd',
   borderRadius: '8px',
   overflow: 'hidden',
-  position: 'relative',
+  position: 'relative' as const,
   backgroundColor: '#f5f5f5',
 };
 
 const controlsStyles = {
-  position: 'absolute',
+  position: 'absolute' as const,
   top: '10px',
   right: '10px',
   zIndex: 100,
   display: 'flex',
-  flexDirection: 'column',
+  flexDirection: 'column' as const,
   gap: '10px',
 };
 
-const nodeStyles = {
-  node: {
-    circle: {
-      fill: '#5469d4',
-    },
-    attributes: {
-      stroke: '#212121',
-    },
-  },
-  leafNode: {
-    circle: {
-      fill: '#4caf50',
-    },
-    attributes: {
-      stroke: '#212121',
-    },
-  },
-};
+interface NodeDatum {
+  name: string;
+  description?: string;
+  path?: string;
+  children?: NodeDatum[];
+}
 
-const renderCustomNodeElement = ({ nodeDatum, toggleNode, onNodeClick }) => (
+interface RenderCustomNodeProps {
+  nodeDatum: NodeDatum;
+  toggleNode: () => void;
+  onNodeClick: (node: any) => void;
+}
+
+const renderCustomNodeElement = ({ nodeDatum, toggleNode, onNodeClick }: RenderCustomNodeProps) => (
   <g>
     <circle r={15} fill={nodeDatum.children ? '#5469d4' : '#4caf50'} onClick={toggleNode} />
     <Tooltip title={nodeDatum.description || 'No description available'}>
@@ -60,7 +54,7 @@ const renderCustomNodeElement = ({ nodeDatum, toggleNode, onNodeClick }) => (
           y="5"
           textAnchor="middle"
           style={{ fontSize: '12px', fontWeight: 'bold' }}
-          onClick={() => onNodeClick(nodeDatum)}
+          onClick={() => onNodeClick({ data: nodeDatum })}
         >
           {nodeDatum.name.charAt(0).toUpperCase()}
         </text>
@@ -71,7 +65,7 @@ const renderCustomNodeElement = ({ nodeDatum, toggleNode, onNodeClick }) => (
       x="25"
       y="5"
       style={{ fontSize: '14px' }}
-      onClick={() => onNodeClick(nodeDatum)}
+      onClick={() => onNodeClick({ data: nodeDatum })}
     >
       {nodeDatum.name}
     </text>
@@ -83,18 +77,18 @@ const RepositoryMap = () => {
   const [zoom, setZoom] = useState(0.6);
   const [translate, setTranslate] = useState({ x: 0, y: 0 });
 
-  const handleNodeClick = (nodeDatum) => {
-    if (nodeDatum.path) {
-      navigate(nodeDatum.path);
+  const handleNodeClick = (node: any) => {
+    if (node.data && node.data.path) {
+      navigate(node.data.path);
     }
   };
 
   const handleZoomIn = () => {
-    setZoom((prevZoom) => Math.min(prevZoom + 0.1, 2));
+    setZoom((prevZoom: number) => Math.min(prevZoom + 0.1, 2));
   };
 
   const handleZoomOut = () => {
-    setZoom((prevZoom) => Math.max(prevZoom - 0.1, 0.1));
+    setZoom((prevZoom: number) => Math.max(prevZoom - 0.1, 0.1));
   };
 
   const handleHomeClick = () => {
@@ -135,7 +129,7 @@ const RepositoryMap = () => {
           translate={{ x: 200 + translate.x, y: 300 + translate.y }}
           zoom={zoom}
           onNodeClick={handleNodeClick}
-          renderCustomNodeElement={(rd3tProps) =>
+          renderCustomNodeElement={(rd3tProps: any) =>
             renderCustomNodeElement({
               ...rd3tProps,
               onNodeClick: handleNodeClick,
