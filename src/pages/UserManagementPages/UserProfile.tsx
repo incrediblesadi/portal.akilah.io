@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { loadUserConfig, updateUserSettings } from './UserManagementServices/usermanagementdata';
 import {
   Box,
   Typography,
@@ -48,20 +49,72 @@ interface UserProfileData {
 const UserProfile: React.FC = () => {
   const { user, signOut } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   
   const [profileData, setProfileData] = useState<UserProfileData>({
-    firstName: user?.attributes?.given_name || 'John',
-    lastName: user?.attributes?.family_name || 'Doe',
-    email: user?.attributes?.email || 'john.doe@example.com',
-    phone: user?.attributes?.phone_number || '+1234567890',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
     twoFactorEnabled: false,
     emailNotifications: true,
     smsNotifications: false,
   });
+
+  useEffect(() => {
+    loadUserProfile();
+  }, []);
+
+  const loadUserProfile = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      
+      const config = await loadUserConfig();
+      
+      if (config && config.userSettings) {
+        const { userSettings } = config;
+        setProfileData({
+          firstName: userSettings.personal_info.first_name,
+          lastName: userSettings.personal_info.last_name,
+          email: userSettings.personal_info.email,
+          phone: userSettings.personal_info.phone,
+          twoFactorEnabled: userSettings.security_settings.two_factor_enabled,
+          emailNotifications: userSettings.notification_preferences.email_notifications,
+          smsNotifications: userSettings.notification_preferences.sms_notifications,
+        });
+      } else {
+        // Use default data if no config found
+        setProfileData({
+          firstName: user?.attributes?.given_name || 'John',
+          lastName: user?.attributes?.family_name || 'Doe',
+          email: user?.attributes?.email || 'john.doe@example.com',
+          phone: user?.attributes?.phone_number || '+1234567890',
+          twoFactorEnabled: false,
+          emailNotifications: true,
+          smsNotifications: false,
+        });
+      }
+    } catch (err: any) {
+      setError(err.message || 'Failed to load user profile');
+      // Fallback to default data
+      setProfileData({
+        firstName: user?.attributes?.given_name || 'John',
+        lastName: user?.attributes?.family_name || 'Doe',
+        email: user?.attributes?.email || 'john.doe@example.com',
+        phone: user?.attributes?.phone_number || '+1234567890',
+        twoFactorEnabled: false,
+        emailNotifications: true,
+        smsNotifications: false,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked, type } = e.target;
@@ -72,25 +125,44 @@ const UserProfile: React.FC = () => {
   };
 
   const handleSave = async () => {
-    setIsLoading(true);
+    setIsSaving(true);
     setError(null);
     setSuccess(null);
 
     try {
-      // In a real implementation, this would call the API to update user profile
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Update user settings using the service
+      await updateUserSettings({
+        personal_info: {
+          first_name: profileData.firstName,
+          last_name: profileData.lastName,
+          email: profileData.email,
+          phone: profileData.phone,
+          profile_picture: ''
+        },
+        security_settings: {
+          two_factor_enabled: profileData.twoFactorEnabled,
+          password_last_changed: '',
+          security_questions: []
+        },
+        notification_preferences: {
+          email_notifications: profileData.emailNotifications,
+          sms_notifications: profileData.smsNotifications,
+          push_notifications: true,
+          marketing_emails: false
+        }
+      } as any);
       
       setSuccess('Profile updated successfully');
       setIsEditing(false);
     } catch (err: any) {
       setError(err.message || 'Failed to update profile');
     } finally {
-      setIsLoading(false);
+      setIsSaving(false);
     }
   };
 
   const handleDeleteAccount = async () => {
-    setIsLoading(true);
+    setIsSaving(true);
     setError(null);
 
     try {
@@ -102,7 +174,7 @@ const UserProfile: React.FC = () => {
     } catch (err: any) {
       setError(err.message || 'Failed to delete account');
     } finally {
-      setIsLoading(false);
+      setIsSaving(false);
       setDeleteDialogOpen(false);
     }
   };
@@ -110,6 +182,14 @@ const UserProfile: React.FC = () => {
   const getInitials = (firstName: string, lastName: string) => {
     return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
   };
+
+  if (isLoading) {
+    return (
+      <Box sx={{ p: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ p: 3 }}>
@@ -140,9 +220,9 @@ const UserProfile: React.FC = () => {
                 variant="outlined"
                 startIcon={isEditing ? <Save /> : <Edit />}
                 onClick={() => isEditing ? handleSave() : setIsEditing(true)}
-                disabled={isLoading}
+                disabled={isSaving}
               >
-                {isLoading ? <CircularProgress size={20} /> : (isEditing ? 'Save' : 'Edit')}
+                {isSaving ? <CircularProgress size={20} /> : (isEditing ? 'Save' : 'Edit')}
               </Button>
             </Box>
 
@@ -331,16 +411,16 @@ const UserProfile: React.FC = () => {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDeleteDialogOpen(false)} disabled={isLoading}>
+          <Button onClick={() => setDeleteDialogOpen(false)} disabled={isSaving}>
             Cancel
           </Button>
           <Button
             onClick={handleDeleteAccount}
             color="error"
             variant="contained"
-            disabled={isLoading}
+            disabled={isSaving}
           >
-            {isLoading ? <CircularProgress size={20} /> : 'Delete Account'}
+            {isSaving ? <CircularProgress size={20} /> : 'Delete Account'}
           </Button>
         </DialogActions>
       </Dialog>

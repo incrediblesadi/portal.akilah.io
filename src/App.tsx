@@ -10,6 +10,7 @@ import SignUp from './pages/SignupPages/SignUp';
 
 // User configuration pages
 import UserProfile from './pages/UserManagementPages/UserProfile';
+import UserConfiguration from './pages/UserManagementPages/UserConfiguration';
 
 // Business Management pages
 import BusinessDashboard from './pages/BusinessManagementPages/BusinessDashboard';
@@ -68,6 +69,7 @@ function AuthenticatedApp() {
           
           {/* User Management Routes */}
           <Route path="/user/profile" element={<UserProfile />} />
+          <Route path="/user/configuration" element={<UserConfiguration />} />
           
           {/* Business Management Routes */}
           <Route path="/business/dashboard" element={<BusinessDashboard />} />
