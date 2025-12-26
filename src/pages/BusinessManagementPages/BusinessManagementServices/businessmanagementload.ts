@@ -1,4 +1,4 @@
-import { Auth } from 'aws-amplify';
+// import { Auth } from 'aws-amplify';
 
 // Define the business information interface
 export interface BusinessInfo {
@@ -46,8 +46,8 @@ export interface BusinessInfo {
 export const loadBusinessInfo = async (businessId?: string): Promise<BusinessInfo> => {
   try {
     // Get the current authenticated user
-    const currentUser = await Auth.currentAuthenticatedUser();
-    const token = currentUser.signInUserSession.idToken.jwtToken;
+    // const currentUser = await Auth.currentAuthenticatedUser();
+    // const token = currentUser.signInUserSession.idToken.jwtToken;
     
     // In a real implementation, this would make an API call to the backend
     // For now, we'll return mock data
